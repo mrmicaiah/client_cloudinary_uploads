@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>French Drain Site — Upload Files</title>
+  <script src="https://upload-widget.cloudinary.com/latest/global/all.js" type="text/javascript"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #f6f9fc 0%, #e9eef5 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #1a2332;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      max-width: 520px;
+      width: 100%;
+      padding: 48px 40px;
+      text-align: center;
+    }
+
+    .icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 24px;
+      background: #eef2ff;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+    }
+
+    .project-tag {
+      display: inline-block;
+      background: #eef2ff;
+      color: #2563eb;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: #5a6678;
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 32px;
+    }
+
+    .upload-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+    }
+
+    .upload-btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+    }
+
+    .upload-btn:active {
+      transform: translateY(0);
+    }
+
+    .info {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid #e5e9f0;
+      font-size: 14px;
+      color: #6b7689;
+      line-height: 1.6;
+    }
+
+    .uploaded-list {
+      margin-top: 24px;
+      text-align: left;
+    }
+
+    .uploaded-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .check {
+      color: #16a34a;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .filename {
+      color: #15803d;
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .success-banner {
+      display: none;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #15803d;
+      padding: 14px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .success-banner.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">📤</div>
+    <span class="project-tag">French Drain Site</span>
+    <h1>Upload Your Files</h1>
+    <p class="subtitle">Drop your photos, videos, or documents below. Multiple files welcome.</p>
+
+    <div class="success-banner" id="successBanner"></div>
+
+    <button class="upload-btn" id="uploadBtn">Choose Files to Upload</button>
+
+    <div class="uploaded-list" id="uploadedList"></div>
+
+    <div class="info">
+      Your files are uploaded securely.<br />
+      You'll see a confirmation for each successful upload.
+    </div>
+  </div>
+
+  <script>
+    const CLOUD_NAME = "dxzw1zwez";
+    const UPLOAD_PRESET = "french-drain-site";
+
+    const uploadBtn = document.getElementById("uploadBtn");
+    const uploadedList = document.getElementById("uploadedList");
+    const successBanner = document.getElementById("successBanner");
+    let uploadCount = 0;
+
+    const widget = cloudinary.createUploadWidget(
+      {
+        cloudName: CLOUD_NAME,
+        uploadPreset: UPLOAD_PRESET,
+        sources: ["local", "camera", "url"],
+        multiple: true,
+        maxFiles: 50,
+        showAdvancedOptions: false,
+        showPoweredBy: false,
+        styles: {
+          palette: {
+            window: "#FFFFFF",
+            sourceBg: "#F4F6F8",
+            windowBorder: "#E5E9F0",
+            tabIcon: "#2563EB",
+            inactiveTabIcon: "#9CA3AF",
+            menuIcons: "#5A6678",
+            link: "#2563EB",
+            action: "#2563EB",
+            inProgress: "#2563EB",
+            complete: "#16A34A",
+            error: "#DC2626",
+            textDark: "#1A2332",
+            textLight: "#FFFFFF"
+          }
+        }
+      },
+      (error, result) => {
+        if (error) {
+          console.error("Upload error:", error);
+          return;
+        }
+
+        if (result && result.event === "success") {
+          uploadCount++;
+          const filename = result.info.original_filename + "." + result.info.format;
+
+          const item = document.createElement("div");
+          item.className = "uploaded-item";
+          item.innerHTML = `
+            <span class="check">✓</span>
+            <span class="filename">${filename}</span>
+          `;
+          uploadedList.appendChild(item);
+
+          successBanner.textContent = `${uploadCount} file${uploadCount === 1 ? "" : "s"} uploaded successfully!`;
+          successBanner.classList.add("show");
+        }
+      }
+    );
+
+    uploadBtn.addEventListener("click", () => {
+      widget.open();
+    });
+  </script>
+</body>
+</html>
